@@ -46,22 +46,6 @@ public class ProductManagerTest {
     }
 
     @Test
-    void shouldFindBookByAuthorIfExists() {
-        String textToFind = "Толстой";
-        Product[] expected = new Product[]{book1};
-        Product[] actual = manager.searchBy(textToFind);
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    void shouldNotFindBookByAuthorIfNoExists() {
-        String textToFind = "Маяковский";
-        Product[] expected = new Product[]{};
-        Product[] actual = manager.searchBy(textToFind);
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
     void shouldFindSmartphoneByNameIfExists() {
         String textToFind = "Galaxy";
         Product[] expected = new Product[]{phone2};
@@ -79,7 +63,7 @@ public class ProductManagerTest {
 
     @Test
     void shouldFindSmartphoneByProducerIfExists() {
-        String textToFind = "Apple";
+        String textToFind = "Iphone";
         Product[] expected = new Product[]{phone1};
         Product[] actual = manager.searchBy(textToFind);
         assertArrayEquals(expected, actual);
@@ -94,9 +78,9 @@ public class ProductManagerTest {
     }
 
     @Test
-    void deleteByExistingId (){
+    void deleteByExistingId() {
         Product[] actual = repository.removeById(1);
-        Product[] expected = new Product[]{book2,book3, phone1,phone2,phone3};
+        Product[] expected = new Product[]{book2, book3, phone1, phone2, phone3};
         assertArrayEquals(expected, actual);
     }
 
