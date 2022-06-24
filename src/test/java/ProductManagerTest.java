@@ -18,19 +18,11 @@ public class ProductManagerTest {
     Smartphone phone2 = new Smartphone(5, "Galaxy", 30000, "Samsung");
     Smartphone phone3 = new Smartphone(6, "Classic", 5000, "Nokia");
 
-    @BeforeEach
-    void setUp() {
-        manager = new ProductManager(repository);
-        manager.addProduct(book1);
-        manager.addProduct(book2);
-        manager.addProduct(book3);
-        manager.addProduct(phone1);
-        manager.addProduct(phone2);
-        manager.addProduct(phone3);
-    }
+
 
     @Test
     void shouldFindBookByNameIfExists() {
+        manager.addProduct(book3);
         String textToFind = "Мастер и Маргарита";
         Product[] expected = new Product[]{book3};
         Product[] actual = manager.searchBy(textToFind);
@@ -38,31 +30,23 @@ public class ProductManagerTest {
     }
 
     @Test
-    void shouldNotFindBookByNameIfNoExists() {
-        String textToFind = "Шантарам";
-        Product[] expected = new Product[]{};
+    void addingMultipleProducts() {
+        manager.addProduct(book1);
+        manager.addProduct(book2);
+        manager.addProduct(book3);
+        manager.addProduct(phone1);
+        manager.addProduct(phone2);
+        manager.addProduct(phone3);
+
+        String textToFind = "Евгений Онегин";
+        Product[] expected = new Product[]{book2};
         Product[] actual = manager.searchBy(textToFind);
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    void shouldFindSmartphoneByNameIfExists() {
-        String textToFind = "Galaxy";
-        Product[] expected = new Product[]{phone2};
-        Product[] actual = manager.searchBy(textToFind);
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    void shouldNotFindSmartphoneByNameIfNoExists() {
-        String textToFind = "Redmi";
-        Product[] expected = new Product[]{};
-        Product[] actual = manager.searchBy(textToFind);
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    void shouldFindSmartphoneByProducerIfExists() {
+    void addingOneProduct() {
+        manager.addProduct(phone1);
         String textToFind = "Iphone";
         Product[] expected = new Product[]{phone1};
         Product[] actual = manager.searchBy(textToFind);
@@ -70,18 +54,36 @@ public class ProductManagerTest {
     }
 
     @Test
-    void shouldNotFindSmartphoneByProducerIfNoExists() {
-        String textToFind = "Xiaomi";
-        Product[] expected = new Product[]{};
+    void addingTwoProducts() {
+        manager.addProduct(phone1);
+        manager.addProduct(phone2);
+
+        String textToFind = "Galaxy";
+        Product[] expected = new Product[]{phone2};
         Product[] actual = manager.searchBy(textToFind);
         assertArrayEquals(expected, actual);
     }
 
     @Test
     void deleteByExistingId() {
+        manager.addProduct(book1);
+        manager.addProduct(book2);
+        manager.addProduct(book3);
+        manager.addProduct(phone1);
+        manager.addProduct(phone2);
+        manager.addProduct(phone3);
+
         Product[] actual = repository.removeById(1);
         Product[] expected = new Product[]{book2, book3, phone1, phone2, phone3};
         assertArrayEquals(expected, actual);
     }
 
+    @Test
+    void addingEmpty() {
+        String textToFind = null;
+        Product[] actual = manager.searchBy(textToFind);
+        Product[] expected = new Product[]{};
+        assertArrayEquals(expected, actual);
+
+    }
 }
