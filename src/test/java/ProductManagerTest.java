@@ -19,10 +19,10 @@ public class ProductManagerTest {
     Smartphone phone3 = new Smartphone(6, "Classic", 5000, "Nokia");
 
 
-
     @Test
     void shouldFindBookByNameIfExists() {
         manager.addProduct(book3);
+        manager.addProduct(book2);
         String textToFind = "Мастер и Маргарита";
         Product[] expected = new Product[]{book3};
         Product[] actual = manager.searchBy(textToFind);
@@ -38,8 +38,8 @@ public class ProductManagerTest {
         manager.addProduct(phone2);
         manager.addProduct(phone3);
 
-        String textToFind = "Евгений Онегин";
-        Product[] expected = new Product[]{book2};
+        String textToFind = "а";
+        Product[] expected = new Product[]{book1, book3};
         Product[] actual = manager.searchBy(textToFind);
         assertArrayEquals(expected, actual);
     }
